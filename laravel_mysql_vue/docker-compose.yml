@@ -1,0 +1,41 @@
+services:
+  laravel:
+   build: ./laravel-docker/
+   ports:
+     - 8080:8181
+   depends_on:
+     - mysql
+
+   networks:
+       - docker
+
+  mysql:
+    image: mysql:9.0.1
+    ports: 
+     - 3307:3306
+    environment:
+       MYSQL_ROOT_PASSWORD: root
+       MYSQL_DATABASE: laravel
+       MYSQL_USER: root
+       MYSQL_PASSWORD: root
+    volumes:
+      - ./:/var/lib/mysql
+    networks:
+       - docker
+
+  # vue:
+  #   build: ./vue-docker/
+  #       # context: ./vue-docker/
+  #       # dockerfile: Dockerfile
+  #   volumes:
+  #      - './:/app'
+  #   networks:
+  #      - docker
+  #   depends_on:
+  #      - laravel
+networks:
+   docker:
+  #  driver: bridge
+# volumes:
+#     sail-mysql:
+#         driver: local
